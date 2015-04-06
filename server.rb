@@ -3,7 +3,7 @@ require 'logger'
 require_relative 'message'
 
 $LOG = Logger.new('/tmp/server.log')
-$LOG.level = Logger::DEBUG 
+$LOG.level = Logger::DEBUG
 
 class Server
   def initialize( host, port)
@@ -17,28 +17,19 @@ class Server
     #Process.daemon
     begin 
       server = TCPServer.new(@host, @port)
-      $LOG.debug("Start UPDServer server")
+      $LOG.debug("Start server")
         
       loop do
         Thread.start(server.accept) do |client|
-          $LOG.debug("Client is coming")
-          message = Message.new(client.gets)
+          stream = client.gets
+          message = Message.new(stream)
+          send = message.processing
           $LOG.debug("Create new class Message, where message.data = #{message.data}")
-          if (message.data.to_s == "GETS")
-            $LOG.debug("if message.data == #{message.data}")
-            client.puts("PUTS")
-            $LOG.debug("Data Sent to client")
-            client.close
-            $LOG.debug("Client close process")
-          else
-            $LOG.debug("GETS != #{message.data}")
-            client.close 
-            break
-          end
+          client.puts message.data
         end
-        server.close
       end
       
+      server.close
             
     rescue Exception => e
      $LOG.error(e.message)

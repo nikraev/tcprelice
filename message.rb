@@ -1,3 +1,5 @@
+require 'json'
+
 class Message
   def initialize(message)
     @message  = message    
@@ -5,10 +7,15 @@ class Message
   end
   
   def splitMessage
+    tmp = JSON.parse(@message)
     @header = @message
     @data = @message
   end
   
+  def processing
+    
+  end
+    
   def header
     @header
   end
