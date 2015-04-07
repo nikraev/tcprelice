@@ -17,8 +17,8 @@ message = {
 }
 =end
 
-header = {:command => "GET", :userid => "nkraev"  }
-data = {:game => "GET", :move => "Kf3"  }
+#header = {:command => "GET", :userid => "nkraev"  }
+#data = {:game => "GET", :move => "Kf3"  }
 
 string = '{"header":{"command":"GET","userid":"nkraev"},"data":{"game":"3","move":"Kf3"}}'
 
